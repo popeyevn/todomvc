@@ -1,1 +1,1 @@
-A simple todo list app built with React, Redux and Webpack
+A simple todo list app built with React and Webpack
