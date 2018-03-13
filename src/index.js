@@ -57,6 +57,7 @@ export default class App extends React.Component {
 
   getItems = () => {
     const { todos, value, selected } = this.state
+    console.log(todos)
     return todos.filter(({ data: { isDone, text } }) => {
       return (
         text.toUpperCase().indexOf(value.toUpperCase()) >= 0 &&
