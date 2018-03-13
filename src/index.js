@@ -85,7 +85,7 @@ export default class App extends React.Component {
             onChange={this.handleToggleAll}
           />
           <ul className="todo-list">
-            {items.map(({ key, style, data: { isDone, text } }) => style => (
+            {items.map(({ key, style, data: { isDone, text } }) => (
               <li style={style} className={isDone ? 'completed' : ''}>
                 <div className="view">
                   <input
