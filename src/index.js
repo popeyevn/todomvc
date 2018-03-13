@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Header from './Header'
-import Footer from './Footer'
-import './styles.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Header from './Header';
+import Footer from './Footer';
+import './styles.css';
 
 export default class App extends React.Component {
   state = {
@@ -17,60 +17,62 @@ export default class App extends React.Component {
       { key: 't8', data: { text: 'Show Demo 2', isDone: false } },
       { key: 't9', data: { text: 'Lament about the state of animation', isDone: false } },
       { key: 't10', data: { text: 'Show Secret Demo', isDone: false } },
-      { key: 't11', data: { text: 'Go home', isDone: false } }
+      { key: 't11', data: { text: 'Go home', isDone: false } },
     ],
     value: '',
-    selected: 'all'
-  }
+    selected: 'all',
+  };
 
-  handleSelect = selected => this.setState({ selected })
-  handleClearCompleted = () => this.setState({ todos: this.state.todos.filter(({ data }) => !data.isDone) })
-  handleDestroy = date => this.setState({ todos: this.state.todos.filter(({ key }) => key !== date) })
-  handleChange = ({ target: { value } }) => this.setState({ value })
+  handleSelect = selected => this.setState({ selected });
+  handleClearCompleted = () =>
+    this.setState({ todos: this.state.todos.filter(({ data }) => !data.isDone) });
+  handleDestroy = date =>
+    this.setState({ todos: this.state.todos.filter(({ key }) => key !== date) });
+  handleChange = ({ target: { value } }) => this.setState({ value });
 
   handleSubmit = e =>
     e.preventDefault() ||
     this.setState({
       todos: [
         {
-          key: 't' + Date.now(),
-          data: { text: this.state.value, isDone: false }
-        }
-      ].concat(this.state.todos)
-    })
+          key: `t${Date.now()}`,
+          data: { text: this.state.value, isDone: false },
+        },
+      ].concat(this.state.todos),
+    });
 
   handleDone = doneKey =>
     this.setState({
-      todos: this.state.todos.map(todo => {
-        const { key, data: { text, isDone } } = todo
-        return key === doneKey ? { key: key, data: { text: text, isDone: !isDone } } : todo
-      })
-    })
+      todos: this.state.todos.map((todo) => {
+        const { key, data: { text, isDone } } = todo;
+        return key === doneKey ? { key, data: { text, isDone: !isDone } } : todo;
+      }),
+    });
 
   handleToggleAll = () =>
     this.setState({
       todos: this.state.todos.map(({ key, data: { text, isDone } }) => ({
-        key: key,
-        data: { text: text, isDone: !this.state.todos.every(({ data }) => data.isDone) }
-      }))
-    })
+        key,
+        data: { text, isDone: !this.state.todos.every(({ data }) => data.isDone) },
+      })),
+    });
 
   getItems = () => {
-    const { todos, value, selected } = this.state
-    
-    return todos.filter(({ data: { isDone, text } }) => {
-      return (
-        text.toUpperCase().indexOf(value.toUpperCase()) >= 0 &&
-        ((selected === 'completed' && isDone) || (selected === 'active' && !isDone) || selected === 'all')
-      )
-    })
-  }
+    const { todos, value, selected } = this.state;
+
+    return todos.filter(({ data: { isDone, text } }) => (
+      text.toUpperCase().indexOf(value.toUpperCase()) >= 0 &&
+        ((selected === 'completed' && isDone) ||
+          (selected === 'active' && !isDone) ||
+          selected === 'all')
+    ));
+  };
 
   render() {
-    const { todos, value, selected } = this.state
-    const itemsLeft = todos.filter(({ data: { isDone } }) => !isDone).length
-    const items = this.getItems()
-    console.log(items)
+    const { todos, value, selected } = this.state;
+    const itemsLeft = todos.filter(({ data: { isDone } }) => !isDone).length;
+    const items = this.getItems();
+    console.log(items);
     return (
       <section className="todoapp">
         <Header value={value} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
@@ -83,15 +85,20 @@ export default class App extends React.Component {
             onChange={this.handleToggleAll}
           />
           <ul className="todo-list">
-              {items.map(({ key, style, data: { isDone, text } }) => style => (
-                <li style={style} className={isDone ? 'completed' : ''}>
-                  <div className="view">
-                    <input className="toggle" type="checkbox" onChange={() => this.handleDone(key)} checked={isDone} />
-                    <label>{text}</label>
-                    <button className="destroy" onClick={() => this.handleDestroy(key)} />
-                  </div>
-                </li>
-              ))}
+            {items.map(({ key, style, data: { isDone, text } }) => style => (
+              <li style={style} className={isDone ? 'completed' : ''}>
+                <div className="view">
+                  <input
+                    className="toggle"
+                    type="checkbox"
+                    onChange={() => this.handleDone(key)}
+                    checked={isDone}
+                  />
+                  <label>{text}</label>
+                  <button className="destroy" onClick={() => this.handleDestroy(key)} />
+                </div>
+              </li>
+            ))}
           </ul>
           <Footer
             itemsLeft={itemsLeft}
@@ -101,8 +108,8 @@ export default class App extends React.Component {
           />
         </section>
       </section>
-    )
+    );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
