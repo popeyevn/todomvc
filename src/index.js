@@ -57,7 +57,7 @@ export default class App extends React.Component {
 
   getItems = () => {
     const { todos, value, selected } = this.state
-    console.log(todos)
+    
     return todos.filter(({ data: { isDone, text } }) => {
       return (
         text.toUpperCase().indexOf(value.toUpperCase()) >= 0 &&
@@ -70,6 +70,7 @@ export default class App extends React.Component {
     const { todos, value, selected } = this.state
     const itemsLeft = todos.filter(({ data: { isDone } }) => !isDone).length
     const items = this.getItems()
+    console.log(items)
     return (
       <section className="todoapp">
         <Header value={value} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
